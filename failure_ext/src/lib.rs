@@ -6,7 +6,6 @@
 use std::fmt;
 
 extern crate failure;
-#[macro_use]
 extern crate failure_derive;
 extern crate futures;
 extern crate slog;

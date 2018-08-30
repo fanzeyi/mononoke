@@ -1,7 +1,7 @@
 [workspace]
 members = [
     # actix_web depends on httparse which uses nightly features
-    # "apiserver",
+  "apiserver",
     # build error related to tokio_io::AsyncWrite
     # "async-compression",
     # "mercurial-bundles",
@@ -10,14 +10,15 @@ members = [
     # "blobstore",
     # "bookmarks",
     # "bundle2-resolver",
-    # "bonsai-utils",
-    "bytes-ext",
+     #"bonsai-utils",
+    #"bytes-ext",
     # depends on failure_ext
     # "changesets",
     # "common/pylz4",
     # "eden_server",
     # "filenodes",
-    "futures-ext",
+    #"failure_ext",
+    #"futures-ext",
     # depends on failure_ext
     # "hgcli",
     # "hgproto",
@@ -28,10 +29,14 @@ members = [
     # "mononoke-types",
     # "repoinfo",
     # "revset",
-    # "server",
+     "server",
     # "storage/filekv",
     # "vfs",
     # depends on netstring crate internal at fb
     # "sshrelay",
-    "storage/types",
+    #"stats",
+    #"storage/types",
 ]
+
+[patch.crates-io]
+cloned = { path = "/Users/fanzeyi/Projects/priv-crates/cloned" }

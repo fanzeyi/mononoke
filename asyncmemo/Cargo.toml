@@ -13,3 +13,8 @@ linked-hash-map = "0.5.1"
 parking_lot = "0.6.1"
 
 futures-ext = { path = "../futures-ext" }
+
+stats = { path = "../stats", optional = true }
+
+[features]
+facebook = ["stats"]

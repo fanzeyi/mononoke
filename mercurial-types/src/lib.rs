@@ -60,6 +60,7 @@ extern crate diesel;
 #[macro_use]
 extern crate failure_ext as failure;
 extern crate itertools;
+#[cfg(feature = "facebook")]
 extern crate rust_thrift;
 extern crate slog;
 #[macro_use]
@@ -79,8 +80,10 @@ extern crate serde;
 extern crate serde_derive;
 
 extern crate futures_ext;
+#[cfg(feature = "facebook")]
 extern crate mercurial_thrift;
 extern crate mononoke_types;
+#[cfg(feature = "facebook")]
 extern crate mononoke_types_thrift;
 extern crate storage_types;
 
@@ -124,9 +127,13 @@ pub use errors::{Error, ErrorKind};
 #[cfg(test)]
 mod test;
 
+#[cfg(feature = "facebook")]
 mod thrift {
     pub use mercurial_thrift::*;
     pub use mononoke_types_thrift::*;
+}
+#[cfg(not(feature = "facebook"))]
+mod thrift {
 }
 
 impl asyncmemo::Weight for HgChangesetId {
@@ -146,3 +153,4 @@ impl asyncmemo::Weight for RepositoryId {
         std::mem::size_of::<RepositoryId>()
     }
 }
+

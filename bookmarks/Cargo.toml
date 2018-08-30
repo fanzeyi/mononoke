@@ -10,5 +10,12 @@ futures = "0.1.17"
 serde_derive = "1.0.66"
 serde = "1.0.66"
 
+failure_ext = { path = "../failure_ext" }
 futures-ext = { path = "../futures-ext" }
+mercurial-types = { path = "../mercurial-types" }
 storage-types = { path = "../storage/types" }
+
+stats = { path = "../stats", optional = true }
+
+[features]
+facebook = ["stats"]

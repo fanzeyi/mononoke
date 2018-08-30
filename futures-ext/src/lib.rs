@@ -5,6 +5,7 @@
 // GNU General Public License version 2 or any later version.
 
 #![deny(warnings)]
+#![allow(deprecated)]
 #![feature(never_type)]
 
 #[cfg(test)]

@@ -1,0 +1,6 @@
+[package]
+name = "rust_thrift"
+version = "0.1.0"
+authors = ["Zeyi Fan <fanzeyi1994@gmail.com>"]
+
+[dependencies]

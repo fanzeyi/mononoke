@@ -38,10 +38,10 @@ extern crate bytes;
 extern crate futures;
 extern crate futures_ext;
 extern crate heapsize;
-#[macro_use]
 extern crate lazy_static;
 extern crate linked_hash_map;
 extern crate parking_lot;
+#[cfg(feature = "facebook")]
 #[macro_use]
 extern crate stats;
 #[cfg(test)]
@@ -59,6 +59,7 @@ use std::usize;
 use futures::{Async, Future, Poll};
 use futures::future::{IntoFuture, Shared, SharedError, SharedItem};
 use parking_lot::Mutex;
+#[cfg(feature = "facebook")]
 use stats::prelude::*;
 
 use futures_ext::BoxFuture;
@@ -72,6 +73,7 @@ mod weight;
 use boundedhash::BoundedHash;
 pub use weight::Weight;
 
+#[cfg(feature = "facebook")]
 define_stats! {
     prefix = "asyncmemo";
     memo_futures_estimate: dynamic_timeseries(
@@ -351,12 +353,19 @@ where
     }
 
     fn report_stats(&self, hash: &CacheHash<F>) {
-        STATS::memo_futures_estimate.add_value(
-            Arc::strong_count(&self.cache.inner) as i64,
-            (self.cache.stats_tag,),
-        );
-        STATS::total_weight.add_value(hash.total_weight() as i64, (self.cache.stats_tag,));
-        STATS::entry_num.add_value(hash.len() as i64, (self.cache.stats_tag,));
+        #[cfg(feature = "facebook")]
+        {
+            STATS::memo_futures_estimate.add_value(
+                Arc::strong_count(&self.cache.inner) as i64,
+                (self.cache.stats_tag,),
+            );
+            STATS::total_weight.add_value(hash.total_weight() as i64, (self.cache.stats_tag,));
+            STATS::entry_num.add_value(hash.len() as i64, (self.cache.stats_tag,));
+        }
+        #[cfg(not(feature = "facebook"))]
+        {
+            let _hash = hash;
+        }
     }
 
     fn poll_real_future(

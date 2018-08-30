@@ -39,8 +39,10 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 
+#[cfg(feature = "facebook")]
 extern crate rust_thrift;
 
+#[cfg(feature = "facebook")]
 extern crate mononoke_types_thrift;
 
 pub mod blob;
@@ -64,6 +66,10 @@ pub use generation::Generation;
 pub use path::{MPath, MPathElement, RepoPath};
 pub use typed_hash::{ChangesetId, ContentId, MononokeId};
 
+#[cfg(feature = "facebook")]
 mod thrift {
     pub use mononoke_types_thrift::*;
+}
+#[cfg(not(feature = "facebook"))]
+mod thrift {
 }
